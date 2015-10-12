@@ -1,0 +1,166 @@
+package com.imslbd.web.controller;
+
+import io.crm.web.WebST;
+import io.crm.web.WebUris;
+import io.crm.web.css.bootstrap.BootstrapCss;
+import io.crm.web.template.*;
+import io.crm.web.template.form.InputBuilder;
+import io.crm.web.template.form.RangeInputBuilder;
+import io.crm.web.template.pagination.PaginationTemplateBuilder;
+import io.vertx.core.Vertx;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.Router;
+import org.watertemplate.Template;
+
+import static java.util.Collections.EMPTY_LIST;
+
+/**
+ * Created by someone on 23/09/2015.
+ */
+final public class CallController {
+    private final Vertx vertx;
+
+    public CallController(final Vertx vertx, final Router router) {
+        this.vertx = vertx;
+        details(router);
+    }
+
+    private void details(final Router router) {
+        router.get(WebUris.callDetails.value).handler(ctx -> {
+            ctx.response().end(
+                    new PageBuilder(WebUris.callDetails.label)
+                            .body(
+                                    new DashboardTemplateBuilder()
+                                            .setUser(ctx.session().get(WebST.currentUser))
+                                            .setSidebarTemplate(
+                                                    new SidebarTemplateBuilder()
+                                                            .setCurrentUri(ctx.request().uri())
+                                                            .createSidebarTemplate()
+                                            )
+                                            .setContentTemplate(
+                                                    new CallDetailsTemplateBuilder()
+                                                            .setFiltersPanel(
+                                                                    filtersPanel()
+                                                            )
+                                                            .setDataPanel(
+                                                                    dataPanel()
+                                                            )
+                                                            .build()
+                                            )
+                                            .build()
+                            )
+                            .build().render());
+        });
+    }
+
+    private Template dataPanel() {
+        return
+                new DataPanelTemplateBuilder("Data")
+                        .setHeader(new JsonObject())
+                        .setData(EMPTY_LIST)
+                        .setPaginationTemplate(
+                                new PaginationTemplateBuilder()
+                                        .prev(c -> {
+                                            c.addClass(BootstrapCss.DISABLED.value);
+                                        })
+                                        .addItem(e -> {
+                                            e.setLabel("1");
+                                        })
+                                        .addItem(e -> {
+                                            e.setLabel("2");
+                                        })
+                                        .addItem(e -> {
+                                            e
+                                                    .setLabel("3")
+                                                    .addClass(BootstrapCss.ACTIVE.value)
+                                            ;
+                                        })
+                                        .next(c -> {
+                                            c.addClass(BootstrapCss.DISABLED.value);
+                                        })
+                                        .createPaginationTemplate()
+                        )
+                        .setFooter(new JsonObject())
+                        .build();
+    }
+
+    private Template filtersPanel() {
+        return
+                new FiltersPanelTemplateBuilder("Filters")
+                        .configureForm(form -> {
+                            form.addRow(builder -> {
+                                builder
+                                        .addSelectInput(
+                                                new InputBuilder<>()
+                                                        .setName("test")
+                                                        .setColumnClasses("col-md-2"))
+                                        .addTextInput(new InputBuilder<>()
+                                                .setPlaceholder("Plsc").setColumnClasses("col-md-2"))
+                                        .addRangeInput(new RangeInputBuilder<Number>()
+                                                .setPlaceholderFrom("From")
+                                                .setPlaceholderTo("To").setColumnClasses("col-md-2"))
+                                        .addDateInput(new InputBuilder<>()
+                                                .setPlaceholder("Plsc").setColumnClasses("col-md-2"))
+                                        .addNumberInput(new InputBuilder<>()
+                                                .setPlaceholder("Plsc").setColumnClasses("col-md-2"))
+                                        .addDateRangeInput(new RangeInputBuilder<>()
+                                                .setPlaceholderFrom("from")
+                                                .setPlaceholderTo("To").setColumnClasses("col-md-2"))
+                                ;
+                            }).addRow(builder -> {
+                                builder
+                                        .addSelectInput(
+                                                new InputBuilder<>()
+                                                        .setName("test")
+                                                        .setColumnClasses("col-md-2"))
+                                        .addTextInput(new InputBuilder<>()
+                                                .setPlaceholder("Plsc").setColumnClasses("col-md-2"))
+                                        .addDateRangeInput(new RangeInputBuilder<>()
+                                                .setPlaceholderFrom("from")
+                                                .setPlaceholderTo("To").setColumnClasses("col-md-2"))
+                                        .addDateInput(new InputBuilder<>()
+                                                .setPlaceholder("Plsc").setColumnClasses("col-md-2"))
+                                        .addNumberInput(new InputBuilder<>()
+                                                .setPlaceholder("Plsc").setColumnClasses("col-md-2"))
+                                        .addRangeInput(new RangeInputBuilder<Number>()
+                                                .setPlaceholderFrom("From")
+                                                .setPlaceholderTo("To").setColumnClasses("col-md-2"))
+                                ;
+                            }).addRow(builder -> {
+                                builder
+                                        .addSelectInput(
+                                                new InputBuilder<>()
+                                                        .setName("test")
+                                                        .setColumnClasses("col-md-2"))
+                                        .addTextInput(new InputBuilder<>()
+                                                .setPlaceholder("Plsc").setColumnClasses("col-md-2"))
+                                        .addRangeInput(new RangeInputBuilder<Number>()
+                                                .setPlaceholderFrom("From")
+                                                .setPlaceholderTo("To").setColumnClasses("col-md-2"))
+                                        .addDateRangeInput(new RangeInputBuilder<>()
+                                                .setPlaceholderFrom("from")
+                                                .setPlaceholderTo("To").setColumnClasses("col-md-2"))
+                                        .addDateInput(new InputBuilder<>()
+                                                .setPlaceholder("Plsc").setColumnClasses("col-md-2"))
+                                        .addNumberInput(new InputBuilder<>()
+                                                .setPlaceholder("Plsc").setColumnClasses("col-md-2"))
+                                ;
+                            }).defaultFooter();
+                        })
+                        .build();
+    }
+
+    public static void main(String... args) {
+        final FormTemplate build = new FormTemplateBuilder()
+                .addRow(form -> {
+                    form.addSelectInput(
+                            new InputBuilder<>()
+                                    .setClasses("col-md-2")
+                                    .setName("test")
+                                    .setColumnClasses("col-md-2"))
+                    ;
+                })
+                .build();
+        System.out.println(build.render());
+    }
+}

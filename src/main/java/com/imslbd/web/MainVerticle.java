@@ -1,4 +1,4 @@
-package com.imslbd;
+package com.imslbd.web;
 
 import io.vertx.core.AbstractVerticle;
 
