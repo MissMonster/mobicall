@@ -1,7 +1,7 @@
 package com.imslbd.web.controller;
 
-import io.crm.web.WebST;
-import io.crm.web.WebUris;
+import io.crm.web.ST;
+import io.crm.web.Uris;
 import io.crm.web.css.bootstrap.BootstrapCss;
 import io.crm.web.template.*;
 import io.crm.web.template.form.InputBuilder;
@@ -26,12 +26,12 @@ final public class CallController {
     }
 
     private void details(final Router router) {
-        router.get(WebUris.callDetails.value).handler(ctx -> {
+        router.get(Uris.callDetails.value).handler(ctx -> {
             ctx.response().end(
-                    new PageBuilder(WebUris.callDetails.label)
+                    new PageBuilder(Uris.callDetails.label)
                             .body(
                                     new DashboardTemplateBuilder()
-                                            .setUser(ctx.session().get(WebST.currentUser))
+                                            .setUser(ctx.session().get(ST.currentUser))
                                             .setSidebarTemplate(
                                                     new SidebarTemplateBuilder()
                                                             .setCurrentUri(ctx.request().uri())

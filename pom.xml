@@ -132,7 +132,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>io.crm.web.WebApp</mainClass>
+                            <mainClass>io.crm.web.App</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
