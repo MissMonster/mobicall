@@ -5,6 +5,7 @@ import io.crm.web.ST;
 import io.crm.web.Uris;
 import io.crm.web.css.bootstrap.TableClasses;
 import io.crm.web.template.*;
+import io.crm.web.template.page.DashboardTemplateBuilder;
 import io.crm.web.template.table.*;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.AsyncResult;
