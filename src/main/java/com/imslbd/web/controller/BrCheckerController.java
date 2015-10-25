@@ -159,7 +159,7 @@ public class BrCheckerController {
                                         .collect(Collectors.toList())
                         )
                         .setPaginationTemplate(
-                                WebUtils.createPaginationTemplateBuilder(uriPath, pagination, PAGINATION_NAV_LENGTH).createPaginationTemplate()
+                                WebUtils.createPaginationTemplateBuilder(uriPath, "", pagination, PAGINATION_NAV_LENGTH).createPaginationTemplate()
                         )
                         .build();
     }
